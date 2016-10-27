@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>全屏视频背景</title>
+    <style media="screen">
+      *{
+        margin: 0;
+        padding: 0;
+      }
+      .box{
+        width: 100px;
+        height: 100px;
+        background-color: pink;
+        margin: 20px auto;
+        line-height: 100px;
+        font-size: 40px;
+        color: #fff;
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.8);
+      }
+      .box:after{
+        content: attr(data-order);//attr为函数
+      }
+      .btn{
+        background-color: green;
+        padding: 5px 20px;
+        color: #fff;
+        margin-right: 10px;
+        border-radius: 10px;
+      }
+      .btn-box{
+        text-align: center;
+        margin-top: 20px;
+
+      }
+      a{
+        text-decoration: none;
+      }
+
+    </style>
+  </head>
+  <body>
+    <!-- <video class="top-big-video" id="topBigVideo"  loop="">
+            <source src="http://ossweb-img.qq.com/images/lol/v1/banner/big-v8.webm" type="video/webm">
+            <source src="http://ossweb-img.qq.com/images/lol/v1/banner/big-v8.mp4" type="video/mp4">
+    </video> -->
+    <div class="box" id="box" data-order="0"></div>
+    <div class="btn-box">
+      <a href="javascript:;" class="btn" id="btn-start">开始</a>
+      <a href="javascript:;" class="btn" id="btn-end">结束</a>
+    </div>
+    <script type="text/javascript">
+    //添加一个计时器
+    var interval = null;
+    var startbtn = document.getElementById('btn-start');
+    var endbtn = document.getElementById('btn-end');
+    var box = document.getElementById('box');
+    function countUp(){
+      startbtn.removeEventListener('click',countUp);
+      interval = setInterval(function(){
+      var order=box.getAttribute('data-order');
+      order = parseInt(order) + 1;
+      box.setAttribute('data-order',order);
+    },1000)
+  }
+    function countEnd(){
+      clearInterval(interval);
+      startbtn.addEventListener('click',countUp,false);
+    }
+    window.onload = function(){
+      box.setAttribute('data-order','1');
+
+      startbtn.addEventListener('click',countUp,false);
+      endbtn.addEventListener('click',countEnd,false);
+    }
+      // var video = document.getElementById('topBigVideo');
+      // //定时器
+      // setTimeout(function(){
+      //   video.play();
+      // },3000);
+    </script>
+  </body>
+</html>
